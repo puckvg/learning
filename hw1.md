@@ -28,4 +28,5 @@ This becomes especially important when working with others, and rules like these
 
 ## Useful references 
 https://realpython.com/python-continuous-integration/
+
 https://github.com/charnley/rmsd

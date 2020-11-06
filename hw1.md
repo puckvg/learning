@@ -25,3 +25,7 @@ Use the tools to
 
 Never accept code in your codebase that is not formatted in a defined style and fails unittests.
 This becomes especially important when working with others, and rules like these makes it easier to collaborate.
+
+## Useful references 
+https://realpython.com/python-continuous-integration/
+https://github.com/charnley/rmsd

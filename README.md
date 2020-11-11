@@ -11,3 +11,9 @@ Set of homework tasks courtesy of @charnley to improve general technical skills.
 - Familiarity with ML tools eg Keras, PyTorch
 - Familiarity with ML algorithms beyond KRR e.g. neural nets, GPR, etc
 - HPC, WTF are GPUs
+
+
+
+## Possible stuff
+
+- Terraform

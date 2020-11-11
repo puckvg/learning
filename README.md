@@ -13,6 +13,11 @@ Set of homework tasks courtesy of @charnley to improve general technical skills.
 - HPC, WTF are GPUs
 
 
+## List of techs that is good to know
+
+- regular expression (https://regexone.com/)
+
+
 
 ## Possible stuff
 

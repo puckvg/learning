@@ -58,7 +58,17 @@ https://github.com/magnars/autolint ?
 `pytest /path/to/repo/`
 pytest runs all files of the form `test__*.py` or `*__test.py` in the current directory and sub-directories
 
-## Future projects
+## Example project
+See example project at : 
+https://github.com/puckvg/ActionsCalculatorLibrary
+
+### Comments: 
+- Didn't vibe with black because it wouldn't tell you a line number which didn't match formatting 
+- Haven't yet gotten into static typing so didn't use mypy
+- Couldn't find autolint 
+- What about autopep8?
+
+## TODO Future projects
 - Always test code on commit to GitHub
 - Always test lint on commit to GitHub
 - Always in-force format on commit

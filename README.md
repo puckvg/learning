@@ -8,6 +8,6 @@ Set of homework tasks courtesy of @charnley to improve general technical skills.
 - Other programming languages e.g. C/C++/Fortran/Java(?)
 - Fancy plotting superiority in python
 
-## Maybe 
 - Familiarity with ML tools eg Keras, PyTorch
 - Familiarity with ML algorithms beyond KRR e.g. neural nets, GPR, etc
+- HPC, WTF are GPUs

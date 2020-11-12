@@ -77,5 +77,9 @@ Never accept code in your codebase that is not formatted in a defined style and 
 This becomes especially important when working with others, and rules like these makes it easier to collaborate.
 
 ## Useful references 
-https://github.com/charnley/rmsd
-https://docs.pytest.org/en/stable/getting-started.html
+- https://github.com/charnley/rmsd
+- https://docs.pytest.org/en/stable/getting-started.html
+- https://pre-commit.com/ 
+
+
+

@@ -19,6 +19,7 @@ results = parallel(square_and_add, xs, n_cores=5)
 
 - advanced: What if you need to change y?
 - advanced: What if the func has many positional and keyword arguments, but you only want to parallelize one argument
+- advanced: For multi arg: what if I wanted to first have a x_list and run in through parallel() and then a y_list and then a z_list?
 - advanced: Use it to do hyper-parameter optimization of a sklearn model
 
 

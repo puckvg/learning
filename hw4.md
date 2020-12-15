@@ -1,10 +1,11 @@
 
 # profiling 
 
-Setup a profiling cmd
+Setup a profiling cmd. Personally I use a format of
 
-  pyprofile script.py --args
+  pyprofile python script.py --args
   
+so I can change the python src
   
 google hints
 

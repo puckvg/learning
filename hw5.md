@@ -20,9 +20,11 @@ Questions:
     for x in {1..3}; do echo ${x%.xyz}; done
   
   do?
+- What is Brace Expansion (bash)?
 
 
-tools I use weekly
+
+tools I use daily/weekly
 
 - wget / curl
 - sed
@@ -32,7 +34,8 @@ tools I use weekly
 - tail
 - head
 - touch
-- 
+- which
+- wc 
 
 
 Tools I love
@@ -45,8 +48,4 @@ Tools I love
 Advanced
 - What is the \033]52;c; terminal escape sequence?
 - Can you compile newest (stable) tmux from github? https://github.com/tmux/tmux
-
-
-
-
-
+- How do you read stdin in Python? E.g. `find . -name "*.sdf" | python functionality.py > results.txt`

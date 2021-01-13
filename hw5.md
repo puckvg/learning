@@ -82,17 +82,50 @@ It loops through an array [1,2,3] and prints out the result of each item in arra
 
 ## Tools I use daily/weekly
 ### wget / curl
-downloads url 
+- `wget` is a tool to download files from servers 
+- `curl` is a tool that lets you exchange requests/responses with a server 
+- usually use them in the same way to DL files e.g. `wget url` or `curl url`
 
 ### sed
-idk 
+- make changes in a file 
+- deep dark death 
+
+- line oriented : default behaviour is change the first occurence on each line 
+
+1. substitute
+- substitute command `s` : changes first occurrences of expression in each line e.g. `sed s/old_match/new_match/ <old >new` changes old_match in old file to new_match in new file 
+- equivalent `sed s/old_match/new_match/ old >new`
+
+- or in the same file ` sed s/old_match/new_match <file`
+
+- note old_match is a regular expression pattern search (wtv that means)
+
+2. much more fancy stuff i dont understand 
 
 ### grep 
-idk 
+- searches given file for lines containing a match to given strings
+
+1. search any line containing word in filename 
+- `grep 'word' filename`
+
+2. perform case-insensitive search 
+- `grep -i 'word' filename`
+
+3. look for all files in current dir + subdir for the word 'word'
+- `grep -R 'word'`
+
+4. search + display total ntimes that the string 'word' appears in a file `words.txt` 
+- `grep -c 'word' words.txt`
+
+5. more stuff 
 
 ### find 
-idk 
-faster tools appz
+- `find` takes a path to find things 
+- `find /` finds + prints every file on the system 
+- `find ~ -name '*.jpg'` search for files matching name "*.jpg" in home dir 
+
+- apparently faster options 
+- i just use find when i cant use ls 
 
 ### awk 
 idk 

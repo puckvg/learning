@@ -87,20 +87,56 @@ It loops through an array [1,2,3] and prints out the result of each item in arra
 - usually use them in the same way to DL files e.g. `wget url` or `curl url`
 
 ### sed
-- make changes in a file 
-- deep dark death 
+- sed is short for stream editor 
+- edits operations on text coming from stdin or file 
+- edits line-by-line and in a non-interactive way 
+- note that the macos version is different but can be installed with homebrew using `brew install gnu-sed`
 
-- line oriented : default behaviour is change the first occurence on each line 
+- default behaviour is to perform edit on <b>first occurrence</b> of a line
+- also default behaviour to output everything to stdout unless redirected (will just print to screen)
 
-1. substitute
-- substitute command `s` : changes first occurrences of expression in each line e.g. `sed s/old_match/new_match/ <old >new` changes old_match in old file to new_match in new file 
-- equivalent `sed s/old_match/new_match/ old >new`
+- Basic usage: 
+``` 
+sed [options] commands [file-to-edit]
+```
 
-- or in the same file ` sed s/old_match/new_match <file`
+#### Simple example: 
+- `sed '' file` will just print file contents to screen 
 
-- note old_match is a regular expression pattern search (wtv that means)
+- You can also easily pipe output. 
 
-2. much more fancy stuff i dont understand 
+- `sed 'p' file` uses the explicit print `p` command. This will print each line twice (line by line). This illustrates line-by-line character 
+
+- `sed -n 'p' file` suppresses automatic printing and uses explicit printing
+
+#### Specifying parts of text stream 
+- `sed -n '1p' file` prints the first line of the file (the 1 is the line number) 
+- `sed -n '1,5p file` prints lines 1-5 (a range) 
+- `sed -n '1,+4p' file` also prints lines 1-5 
+- `sed -n '1~2p' file` prints every other line starting at 1 
+
+#### Deleting text 
+- Let's remove `-n` because it's useful to see what is left (not deleted) 
+- `sed '1~2d' file` deletes every other line starting at 1 (<b>d instead of p</b>) and prints the rest 
+- Remember at any point we can redirect output to a file `sed 1~2d file > everyother.txt`
+- We can also edit inplace using `-i` but be careful because this does overwrite the original file 
+- `sed -i '1~2d' everyother.txt` edits in place 
+- we can also make a backup with `sed -i.bak '1~2d' everyother.txt` which creates a backup with `.bak` extension and edits original file in-place
+
+#### Search and replace 
+- `sed` is most well-known for substituting text 
+- you can search for text patterns using regular expressions and replace text with something else 
+- In its most basic form, you can change one word to another with the syntax `'s/old_word/new_word/'`
+- Note you can use a different delimiter such as _ 
+- Here we can print a url and modify it with sed, using the _ as delimiter: 
+```
+echo "http://www.example.com/index.html" | sed 's_com/index_org/home_'
+```
+which replaces `com/index` with `org/home`: 
+`http://www.example.org/home.html`
+- Note you need the fnal delimiter or sed will complain about unterminated commands.
+
+to continue from this page https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux 
 
 ### grep 
 - searches given file for lines containing a match to given strings
@@ -122,13 +158,112 @@ It loops through an array [1,2,3] and prints out the result of each item in arra
 ### find 
 - `find` takes a path to find things 
 - `find /` finds + prints every file on the system 
-- `find ~ -name '*.jpg'` search for files matching name "*.jpg" in home dir 
+- `find ~ -name '*.jpg'` search for files matching name `*.jpg` in home dir 
 
 - apparently faster options 
 - i just use find when i cant use ls 
 
 ### awk 
-idk 
+- awk is a scripting language for manipulating data 
+
+It can:
+- scan a file line by line 
+- split each input line into fields
+- compare input line/field to pattern 
+- perform action(s) on matched lines 
+
+Useful for: 
+- transforming data files 
+
+Syntax:
+```
+awk options 'selection_criteria {action }' input_file > output_file
+```
+
+e.g. 
+```
+$cat > employee.txt
+
+ajay manager account 45000
+sunil clerk account 25000
+varun manager sales 50000
+amit manager account 47000
+tarun peon sales 15000
+deepak clerk sales 23000
+sunil peon sales 13000
+satvik director purchase 80000 
+```
+
+1. `awk '{print}' employee.txt`
+prints every line of data (no pattern given)
+
+2. `awk '/manager/ {print}' employee.txt`
+prints only lines containing pattern 
+```
+ajay manager account 45000
+varun manager sales 50000
+amit manager account 47000 
+```
+
+3. `awk '{print $1,$3}' employee.txt`
+splits by whitespace character and stores in $n. if a line has 4 words, it's stored in $1 to $4. $0 prints the whole line.
+```
+ajay 45000
+sunil 25000
+varun 50000
+amit 47000
+tarun 15000
+deepak 23000
+sunil 13000
+satvik 80000 
+```
+
+Built in varaibles in awk: 
+- `NR` : keeps count of # of input records (lines)
+e.g. `awk '{print NR, $0}' employee.txt` outputs:
+```
+1 ajay manager account 45000
+2 sunil clerk account 25000
+3 varun manager sales 50000
+4 amit manager account 47000
+5 tarun peon sales 15000
+6 deepak clerk sales 23000
+7 sunil peon sales 13000
+8 satvik director purchase 80000 
+```
+prints the line number and then the line 
+
+or `awk 'NR==3, NR==6 {print NR, $0}' employee.txt` outputs: 
+```
+3 varun manager sales 50000
+4 amit manager account 47000
+5 tarun peon sales 15000
+6 deepak clerk sales 23000 
+```
+displays lines 3 to 6, with the line number and the line
+
+- `NF` keeps count of the number of field in the current input record (line) 
+e.g. `awk '{print $1, $NF}' employee.txt` outputs: 
+```
+ajay 45000
+sunil 25000
+varun 50000
+amit 47000
+tarun 15000
+deepak 23000
+sunil 13000
+satvik 80000 
+```
+ie. it prints the last field with $NF
+
+- `FS` contains field separator character (usually white space) - this can be reassigned 
+
+- `RS` stores the current record separator (newline) 
+
+- `OFS` stores output separator (field when awk prints them) - normally white space 
+
+- `ORS` separates output lines - newline character 
+
 
 ### tail/head
 
@@ -146,6 +281,13 @@ counts
 - https://github.com/junegunn/fzf
 - tmux
 
+
+## Example 
+- download csv file eg chembl 
+- swap two columns in csv file with awk 
+- select certain rows with grep 
+- replace parts of name with sed 
+- cat filename.csv | awk | grep | sed > filename2.csv
 
 ## Advanced
 - What is the \033]52;c; terminal escape sequence?

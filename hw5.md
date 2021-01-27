@@ -346,11 +346,17 @@ do something with it :
 ```
 import sys 
 
-inputs = sys.stdin.read().split()
+# do not read into list but rather use a generator which yields the lines as they're requested  
+for name in sys.stdin:
+    name = name.strip()
+    print("name", name)
 
-print("inputs: ", inputs) 
+    # do something with file....
+    with open(name, "r") as f: 
+        lines = f.readlines()
+    lines = [line.strip() for line in lines]
 
-# do something with files....
+    print("file contains", lines)
 ```
 
 

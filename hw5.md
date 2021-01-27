@@ -75,7 +75,6 @@ print("Hello world", file=sys.stderr)
 - `${VAR#pattern}$` removes a matching prefix e.g. `${file#*.}$` returns `.txt`
 - # comes before % on keyboard since prefixes come before suffixes
 
-- so much additional possible complexity here and I find it rather confusing...!! 
 
 5. What does `for x in {1..3}; do echo ${x%.xyz}; done` do?
 It loops through an array [1,2,3] and prints out the result of each item in array removing the suffix .xyz
@@ -88,6 +87,7 @@ It loops through an array [1,2,3] and prints out the result of each item in arra
 
 ### sed
 - sed is short for stream editor 
+- USE THIS TO SEARCH + REPLACE 
 - edits operations on text coming from stdin or file 
 - edits line-by-line and in a non-interactive way 
 - note that the macos version is different but can be installed with homebrew using `brew install gnu-sed`
@@ -140,6 +140,8 @@ to continue from this page https://www.digitalocean.com/community/tutorials/the-
 
 ### grep 
 - searches given file for lines containing a match to given strings
+- or antipatterns
+- can also grep in folder 
 
 1. search any line containing word in filename 
 - `grep 'word' filename`
@@ -160,11 +162,16 @@ to continue from this page https://www.digitalocean.com/community/tutorials/the-
 - `find /` finds + prints every file on the system 
 - `find ~ -name '*.jpg'` search for files matching name `*.jpg` in home dir 
 
-- apparently faster options 
+- doesn't store in memory
 - i just use find when i cant use ls 
+- there are faster tools
+
+### parallel
+- parallel across processors 
 
 ### awk 
 - awk is a scripting language for manipulating data 
+- Useful when there are columns / column-based operations
 
 It can:
 - scan a file line by line 
@@ -266,21 +273,28 @@ ie. it prints the last field with $NF
 
 
 ### tail/head
+- can print file until something
 
 ### touch 
-generates file w name 
+- generates file w name 
+- updates timestamp 
+- looking for changed files 
 
 ### which 
+- look for python version/versions of anything 
+- vim `which tldr`
 
 ### wc 
+ls | wc -l 
 counts  
 
 ## Tools I love
-
-- tldr / cheat.sh
-- https://github.com/junegunn/fzf
-- tmux
-
+- tldr / cheat.sh (MUCH better than man)
+- ctrl + r then typing eg pip shows you the last pip commands executed
+- https://github.com/junegunn/fzf : ctrl + r upgrade
+- tmux : can have separate sessions + keeps sessions alive, resize terminals
+    - change shortcuts 
+    - look at jimmys dotfiles 
 
 ## Example 
 - download csv file eg chembl 
@@ -290,6 +304,53 @@ counts
 - cat filename.csv | awk | grep | sed > filename2.csv
 
 ## Advanced
-- What is the \033]52;c; terminal escape sequence?
-- Can you compile newest (stable) tmux from github? https://github.com/tmux/tmux
-- How do you read stdin in Python? E.g. `find . -name "*.sdf" | python functionality.py > results.txt`
+1. What is the \033]52;c; terminal escape sequence?
+- see https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797 for useful help
+- escape sequences in general are a combination of characters that together have a meaning other than the literal characters therein 
+- marked with one or more and possibly terminating characters 
+- eg in C an escape sequence starts with a backslash \ 
+
+- ANSI escape sequences are a sequence of ASCII characters with the following prefixes: 
+    - ctrl key `^[`
+    - octal `\033`
+    - unicode `\u001b`
+    - hexadecimal `\x1b`
+    - decimal `27`
+
+    followed by command, usually delimited by opening sq bracket `[` and followed by arguments and command
+
+- e.g. `\x1b[1;31m` sets style to bold with red foreground 
+- `ESC[{code};{string};{...}p` redefines a keyboard key to a specified string 
+
+- Here the `\033]` is the octal escape sequence + delimiter 
+- 52 is the code for the left arrow 
+- should replace left arrow with c key 
+- trying this in terminal doesn't work! 
+
+2. Can you compile newest (stable) tmux from github? https://github.com/tmux/tmux
+On mac this was the following steps: 
+- `git clone https://github.com/tmux/tmux`
+- `pip install autoconf`
+- `brew install automake`
+- `brew install pkg-config` 
+- `brew install ncurses`
+- `cd tmux`
+- `sh autogen.sh`
+- `./configure && make`
+
+Can run tmux like `tmux` but can do a lot of customisation
+
+3. How do you read stdin in Python? E.g. `find . -name "*.sdf" | python functionality.py > results.txt`
+If we have eg a bunch of sdf files, the following python file would read in each file from stdin and 
+do something with it : 
+```
+import sys 
+
+inputs = sys.stdin.read().split()
+
+print("inputs: ", inputs) 
+
+# do something with files....
+```
+
+

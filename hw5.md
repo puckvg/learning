@@ -340,6 +340,58 @@ On mac this was the following steps:
 
 Can run tmux like `tmux` but can do a lot of customisation
 
+On cluster there is a lot of nastyness :
+```
+TMUX_VERSION=2.3
+INSTALL_DIR=/group/hepheno/smsharma
+
+# create our directories
+mkdir -p $INSTALL_DIR/local $INSTALL_DIR/tmux_tmp
+cd $INSTALL_DIR/tmux_tmp
+
+# download source files for tmux, libevent, and ncurses
+wget -O tmux-${TMUX_VERSION}.tar.gz https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.19-stable.tar.gz
+wget ftp://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz
+
+# extract files, configure, and compile
+
+############
+# libevent #
+############
+tar xvzf libevent-2.0.19-stable.tar.gz
+cd libevent-2.0.19-stable
+./configure --prefix=$INSTALL_DIR/local --disable-shared
+make
+make install
+cd ..
+
+############
+# ncurses  #
+############
+tar xvzf ncurses-5.9.tar.gz
+cd ncurses-5.9
+./configure --prefix=$INSTALL_DIR/local 
+make
+make install
+cd ..
+
+############
+# tmux     #
+############
+tar xvzf tmux-${TMUX_VERSION}.tar.gz
+cd tmux-${TMUX_VERSION}
+./configure CFLAGS="-I$INSTALL_DIR/local/include -I$INSTALL_DIR/local/include/ncurses" LDFLAGS="-L$INSTALL_DIR/local/lib -L$INSTALL_DIR/local/include/ncurses -L$INSTALL_DIR/local/include"
+CPPFLAGS="-I$INSTALL_DIR/local/include -I$INSTALL_DIR/local/include/ncurses" LDFLAGS="-static -L$INSTALL_DIR/local/include -L$INSTALL_DIR/local/include/ncurses -L$INSTALL_DIR/local/lib" make
+cp tmux $INSTALL_DIR/local/bin
+cd ..
+
+# cleanup
+rm -rf $INSTALL_DIR/tmux_tmp
+```
+Τhen in bashrc : 
+`alias tmux=$INSTALL_DIR/local/bin/tmux`
+
 3. How do you read stdin in Python? E.g. `find . -name "*.sdf" | python functionality.py > results.txt`
 If we have eg a bunch of sdf files, the following python file would read in each file from stdin and 
 do something with it : 

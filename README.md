@@ -7,9 +7,9 @@ Set of homework tasks courtesy of @charnley to improve general programming skill
 3. Multiprocessing in python
 4. Profiling 
 5. Bash / linux
+6. Regex 
 
 ## Ideas for future weeks (sorted)
-- Regular expressions https://regexone.com/
 - Databases / SQL 
 - dashboarding tools like tableau/powerBI
 - web stuff e.g. in js

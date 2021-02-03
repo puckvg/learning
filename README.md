@@ -10,14 +10,14 @@ Set of homework tasks courtesy of @charnley to improve general programming skill
 
 ## Ideas for future weeks (sorted)
 - Regular expressions https://regexone.com/
+- Databases / SQL 
+- dashboarding tools like tableau/powerBI
+- web stuff e.g. in js
+  - AI stuff 
+  - UX webapp stuff 
 - Fancy plotting superiority in python 
 - ML tools e.g. PyTorch (date TBA, probably february)
-- Databases / SQL 
-- webstuff
-  - API stuff
-  - UX webapp stuff
 - Terraform (?)
-- Other languages e.g. C/C++/Fortran/Java?
 - Env management
 - HPC, GPUs 
 

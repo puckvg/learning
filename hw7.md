@@ -238,13 +238,30 @@ INSERT INTO student_grades (student_id, test, grade)
 ## Joining related tables with left outer joins 
 Status https://www.khanacademy.org/computing/computer-programming/sql/relational-queries-in-sql/pt/joining-related-tables-with-left-outer-joins
 
+# Discussion w Jimmy 
+- Why useful? 
+    - If data is big
+    - subqueries 
+- NoSQL no relation
+- Guido REDIS is a NoSQL : key-value dict
+- Server/ cloud DynamoDB (AWS alternative) 
+- If I only want to read per key then NoSQL is the right solution
+- Faster + more scalable 
 
+- SQL is interfacing language 
 
+- SQLite is local (to disk) / AWS server 
+- PostGRES AWS relational 
 
-# Comments 
-- Can you not add all data at once??? Why is it one by one? 
-- Do you normally write SQL code in .sql files with commands as above? 
+- SQLAlchemy is a wrapper for black box that makes queries easier in python - gives objects back 
+- Generates schema of database 
+- Otherwise bash has to initiate database depending on database 
 
+# Homework 
+- Make SQLite database eg apartment scraper via SQLAlchemy 
+- Use database when bash becomes really slow 
+- 5 CSV files with relations 
+- Use database when you start having memory issues 
 
-
+- To get fast SQL queries: take course in databases 
 

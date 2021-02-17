@@ -8,15 +8,15 @@ Set of homework tasks courtesy of @charnley to improve general programming skill
 4. Profiling 
 5. Bash / linux
 6. Regex 
+7. Databases : SQL / SQLAlchemy (in progress)
 
 ## Ideas for future weeks (sorted)
-- Databases / SQL 
+- PyTorch starts 22 Feb 
+- Scaling of algorithms 
 - dashboarding tools like tableau/powerBI
 - web stuff e.g. in js
   - AI stuff 
   - UX webapp stuff 
-- Fancy plotting superiority in python 
-- ML tools e.g. PyTorch (date TBA, probably february)
 - Terraform (?)
 - Env management
 - HPC, GPUs 

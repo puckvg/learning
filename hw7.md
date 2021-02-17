@@ -2,8 +2,11 @@
 
 - Save QM7 to SQLAcademy 
 - What is SQLAcademy? what is relationship to database?
+ 
+- First looking at regular SQL with khanacademy 
 
-## What are databases / what is SQL?
+# SQL Basics 
+##  What are databases / what is SQL?
 - A database stores data and has functionality for adding, modifying and querying data, fast 
 - Relational database : stores data in a table. row is an item, column is properties 
 - Relational database makes it easy to relates between tables
@@ -70,6 +73,7 @@ INSERT INTO groceries VALUES (6, "Chocolate syrup", 1, 4);
 - First `GROUP BY`, then `SUM`, then `SELECT` (i.e. backwards) 
 - Shouldn't use something different than what you're grouping by even though it will return something 
 
+# More advanced SQL queries
 ## More complex queries with AND/OR
 - Track exercise 
 ```
@@ -134,7 +138,7 @@ SELECT * FROM exercise_logs;
 
 - COUNT operator tells us how often we did activity: `SELECT type FROM exercise_logs GROUP BY type HAVING COUNT(*) >= 2;`
 
-# Why query ? 
+## Why query ? 
 - Imagine we have an exercise app with thousands of users storing exercise logs 
 - App lets users enter daily logs and view progress on a personal dashboard 
 - Software engineers will build the backend (server side logic) and front end (HTML/CSS/JS that renders data and forms) 
@@ -150,4 +154,96 @@ SELECT * FROM exercise_logs;
 - Might use `SELECT` to look at how many users use the `heart_rate` field at all, and whether to get rid of it 
 
 ## Calculating results with CASE 
+- Logged heart_rate for cases 
+- Max heart_rate is 220 - age 
+- Query logs to see if heart rate goes above max - something wrong with device 
+- `SELECT COUNT(*) FROM exercise_logs WHERE heart_rate > 220 - 30;` 
+- Most maths operators work 
+- Does heart go into target (50-75% of max)?
+- `SELECT COUNT(*) FROM exercise_logs WHERE heart_rate > ROUND(0.5 * (220-30)) AND heart_rate <= ROUND(0.9 * (220-30))`
+- Want a summary of logs and how many were in each zone - use CASE statement to "create" column 
+
+- Similar to an `if` 
+```
+SELECT COUNT(*), 
+    CASE 
+        WHEN heart_rate > 220-30 THEN "above max" 
+        WHEN heart_rate > ROUND(0.9*(220-30)) THEN "above target"
+        WHEN heart_rate > ROUND(0.5*(220-30)) THEN "within target"
+        ELSE "below target"
+    END as "hr_zone"
+
+FROM exercise_logs
+GROUP BY hr_zone; 
+```
+
+# Relational Queries with SQL  
+## Splitting data into related tables 
+- A single table is good when data is <b>one-to-one</b>. Multiple tables are better otherwise. 
+- Most of the time, we have data in multiple tables, and those tables are related in some way
+- Need to understand how to deal with data that is split up across multiple related tables, and bring data back together across tables when you need it 
+- Use `join`s
+
+## JOINing related tables 
+- Consider two tables: students names/emails and student_grades 
+```
+CREATE TABLE students (id INTEGER PRIMARY KEY,
+    first_name TEXT,
+    last_name TEXT,
+    email TEXT,
+    phone TEXT,
+    birthdate TEXT);
+
+INSERT INTO students (first_name, last_name, email, phone, birthdate)
+    VALUES ("Peter", "Rabbit", "peter@rabbit.com", "555-6666", "2002-06-24");
+INSERT INTO students (first_name, last_name, email, phone, birthdate)
+    VALUES ("Alice", "Wonderland", "alice@wonderland.com", "555-4444", "2002-07-04");
+    
+CREATE TABLE student_grades (id INTEGER PRIMARY KEY,
+    student_id INTEGER,
+    test TEXT,
+    grade INTEGER);
+
+INSERT INTO student_grades (student_id, test, grade)
+    VALUES (1, "Nutrition", 95);
+INSERT INTO student_grades (student_id, test, grade)
+    VALUES (2, "Nutrition", 92);
+INSERT INTO student_grades (student_id, test, grade)
+    VALUES (1, "Chemistry", 85);
+INSERT INTO student_grades (student_id, test, grade)
+    VALUES (2, "Chemistry", 95);
+```
+- The id's are consistent across the databases 
+- Query to output student name and email across test grade
+- Across 2 tables : join them 
+
+### Cross join 
+- `SELECT * FROM student_grades, students;` creates rows for each 
+- Each row in first table it adds a row in each row for second table (2 x 4) 
+- Don't want all rows matched with all other rows - but only want match if student ID matches 
+
+### Inner join 
+- Implicit inner join: 
+- `SELECT * FROM student_grades, students WHERE student_grades.student.id = students.id;`
+
+- Explicit inner join JOIN : 
+- `SELECT first_name, last_name, email, test, grade FROM students JOIN student_grades ON students.id = students_grades.student_id;`
+
+- Can also filter after `WHERE grade > 90;`
+
+- What about tables with same column names but different meanings? Eg if grade is in two tables with different meanings 
+- Should prefix columns with table name they are from 
+- `SELECT students.first_name, students.last_name, students.email, student_grades.test, student_grades.grade FROM students JOIN student_grades ON students.id = student_grades.student_id;`
+
+## Joining related tables with left outer joins 
+Status https://www.khanacademy.org/computing/computer-programming/sql/relational-queries-in-sql/pt/joining-related-tables-with-left-outer-joins
+
+
+
+
+# Comments 
+- Can you not add all data at once??? Why is it one by one? 
+
+
+
 

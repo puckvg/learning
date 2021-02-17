@@ -243,6 +243,7 @@ Status https://www.khanacademy.org/computing/computer-programming/sql/relational
 
 # Comments 
 - Can you not add all data at once??? Why is it one by one? 
+- Do you normally write SQL code in .sql files with commands as above? 
 
 
 
